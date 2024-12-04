@@ -1,13 +1,13 @@
-import Suitable from "./Suitable";
+import Acquired from "../interfaces/Acquired";
 
 export default class Cart {
-    private items: Suitable[] = [];
+    private items: Acquired[] = [];
 
-    addItem(item: Suitable): void {
+    addItem(item: Acquired): void {
         this.items.push(item);
     }
 
-    getItems(): Suitable[] {
+    getItems(): Acquired[] {
         return[...this.items];
     }
 

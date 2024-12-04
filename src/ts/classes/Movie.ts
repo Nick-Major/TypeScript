@@ -1,6 +1,6 @@
-import Suitable from "./Suitable";
+import Acquired from "../interfaces/Acquired";
 
-export class Movie implements Suitable {
+export class Movie implements Acquired {
     id: number;
     title: string;
     price: number;
