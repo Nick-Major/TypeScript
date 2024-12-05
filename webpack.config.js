@@ -1,39 +1,57 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('node:path'); // модуль для работы с путями
+const HtmlWebPackPlugin = require('html-webpack-plugin'); // плагин для сборки html-файлов
 
 module.exports = {
-    entry: './src/index.js',
-    output: {
-        path: path.resolve(__dirname, './dist'),
-        filename: 'app.bundle.js',
-    },
+  entry: './src/index.ts', // точка входа
 
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /(node_modules|bower_components)/,
-            },
-            {
-                test: /\.tsx?$/,
-                exclude: /node_modules/,
-                use: { loader: 'ts-loader' },
-            },
-        ]
-    },
-    resolve: {
-        extensions: ['.tsx', '.ts', '.js', '.json'],
-    },
+  output: {
+    path: path.resolve(__dirname, 'dist'), // папка для сборки бандлов
+  },
 
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: "./src/index.html",
-            filename: "./index.html"
-        })
+  module: {
+    rules: [
+      {
+        test: /\.js$/, // маска
+        exclude: /node_modules/, // исключаем файлы в mode_modules
+        use: {
+          loader: 'babel-loader', // загрузчик
+        },
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader',
+          },
+        ],
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: { loader: 'ts-loader' },
+      },
     ],
-    devServer: {
-        watchFiles: path.join(__dirname, 'src'),
-        port: 9000,
-    },
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.json'], // расширения по умолчанию
+  },
+
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: './src/index.html', // шаблон
+      filename: './index.html', // имя файла
+    }),
+  ],
 };
